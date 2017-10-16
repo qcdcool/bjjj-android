@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">自助进京</string>
+    <string name="tip_table_user_info">1、填写用户信息</string>
+    <string name="tip_user_id">userId</string>
+    <string name="tip_platform">platform</string>
+    <string name="tip_table_car_info">2、填写车辆信息</string>
+    <string name="tip_licenseno">licenseno</string>
+    <string name="tip_engineno">engineno</string>
+    <string name="tip_cartypecode">cartypecode</string>
+    <string name="tip_vehicletype">vehicletype</string>
+    <string name="tip_carid">carid</string>
+    <string name="tip_carmodel">carmodel</string>
+    <string name="tip_carregtime">carregtime</string>
+    <string name="tip_envGrade">envGrade</string>
+    <string name="tip_table_person_info">3、填写个人信息</string>
+    <string name="tip_drivername">drivername</string>
+    <string name="tip_driverlicenseno">driverlicenseno</string>
+    <string name="tip_table_sign_info">4、附加签名信息</string>
+    <string name="choose_zip_file">选择文件</string>
+    <string name="tip_choose_zip_file">请选择签名zip文件，该zip文件根目录为userid命名的目录，具体结构参见 https://github.com/zhaopaniOS/bjjj-php 中关于目录结构的说明</string>
+    <string name="tip_table_car_list_info">5、查询车辆列表信息</string>
+    <string name="enter_car_list">查询</string>
+    <string name="tip_table_submit_paper">6、提交表单申请</string>
+    <string name="submit_paper">提交申请</string>
+</resources>
