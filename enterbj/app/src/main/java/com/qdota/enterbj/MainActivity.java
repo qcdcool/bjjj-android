@@ -234,6 +234,10 @@ public class MainActivity extends AppCompatActivity {
         mEdit_userid.setText(userid);
         mEdit_platform.setText(platform);
         mEdit_licenseno.setText(licenseno);
+        reloadDataWithUser(userid, licenseno);
+    }
+
+    private void reloadDataWithUser(String userid, String licenseno) {
         // 如果car和person存在，则也读取
         if (!TextUtils.isEmpty(userid) && !TextUtils.isEmpty(licenseno)) {
             final String path = Config.formatCarPath(this, userid, licenseno);
@@ -249,10 +253,16 @@ public class MainActivity extends AppCompatActivity {
             }
             final JsonObject jsonPerson = Config.loadJsonFrom(path, "person.json");
             if (jsonPerson != null) {
-                mEdit_drivername.setText(jsonCar.get("drivername").getAsString());
-                mEdit_driverlicenseno.setText(jsonCar.get("driverlicenseno").getAsString());
+                mEdit_drivername.setText(jsonPerson.get("drivername").getAsString());
+                mEdit_driverlicenseno.setText(jsonPerson.get("driverlicenseno").getAsString());
             }
         }
+    }
+
+    private void refreshUI() {
+        final String userid = mEdit_userid.getText().toString();
+        final String licenseno = mEdit_licenseno.getText().toString();
+        reloadDataWithUser(userid, licenseno);
     }
 
     @Override
@@ -268,6 +278,8 @@ public class MainActivity extends AppCompatActivity {
                 final String path = FileUtils.getSmartFilePath(this, uri);
                 // 解压文件到目录
                 copyToData(path);
+                // 刷新界面数据
+                refreshUI();
             }
         }
     }
