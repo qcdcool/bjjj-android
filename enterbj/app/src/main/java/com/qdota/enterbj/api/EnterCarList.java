@@ -34,7 +34,7 @@ public class EnterCarList {
                 .followRedirects(false)
                 .build();
 
-        final GregorianCalendar point = Config.generateTimestampPoint(new GregorianCalendar(2017, 9, 11));
+        final GregorianCalendar point = Config.generateTimestampPoint(new GregorianCalendar());
         final String date = Config.formatTimestampDate(point);
         final String timestamp = Config.formatTimestampPoint(point);
 
