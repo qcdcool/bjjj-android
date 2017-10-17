@@ -171,7 +171,7 @@ public class MainActivity extends AppCompatActivity {
                     userid = "";
                     platform = "";
                 }
-                EnterCarList.request(MainActivity.this, userid, platform, new Callback() {
+                final boolean bSuccess = EnterCarList.request(MainActivity.this, userid, platform, new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
                         Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
@@ -188,6 +188,9 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 });
+                if (!bSuccess) {
+                    Toast.makeText(MainActivity.this, R.string.request_error_no_sign, Toast.LENGTH_LONG).show();
+                }
             }
         });
         mTVCarList = (TextView) findViewById(R.id.tv_car_list);
@@ -206,7 +209,7 @@ public class MainActivity extends AppCompatActivity {
                 if (TextUtils.isEmpty(licenseno)) {
                     licenseno = "";
                 }
-                SubmitPaper.request(MainActivity.this, userid, platform, licenseno, new Callback() {
+                final boolean bSuccess = SubmitPaper.request(MainActivity.this, userid, platform, licenseno, new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
                         Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
@@ -223,6 +226,9 @@ public class MainActivity extends AppCompatActivity {
                         }
                     }
                 });
+                if (!bSuccess) {
+                    Toast.makeText(MainActivity.this, R.string.request_error_no_sign, Toast.LENGTH_LONG).show();
+                }
             }
         });
         mTVSubmitResponse = (TextView) findViewById(R.id.tv_submit_response);
