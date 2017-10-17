@@ -336,6 +336,40 @@
 
         </LinearLayout>
 
+        <!-- 4、保存上面信息到配置文件 -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/tip_table_save_info"/>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical">
+
+            <Button
+                android:id="@+id/btn_save_profile"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/save_profile" />
+
+            <View
+                android:layout_width="10dp"
+                android:layout_height="match_parent"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1.0"
+                android:singleLine="false"
+                android:minLines="3"
+                android:text="@string/tip_save_profile"
+                android:autoLink="all"
+                android:linksClickable="true"/>
+
+        </LinearLayout>
+
         <!-- 4、签名信息 -->
         <TextView
             android:layout_width="match_parent"
@@ -398,7 +432,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1.0"
                 android:singleLine="false"
-                android:minLines="3"/>
+                android:minLines="3"
+                android:hint="@string/tip_enter_car_list"/>
 
         </LinearLayout>
 
@@ -430,7 +465,8 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1.0"
                 android:singleLine="false"
-                android:minLines="3"/>
+                android:minLines="3"
+                android:hint="@string/tip_submit_paper"/>
 
         </LinearLayout>
 

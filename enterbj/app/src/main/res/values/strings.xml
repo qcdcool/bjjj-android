@@ -15,11 +15,16 @@
     <string name="tip_table_person_info">3、填写个人信息</string>
     <string name="tip_drivername">drivername</string>
     <string name="tip_driverlicenseno">driverlicenseno</string>
-    <string name="tip_table_sign_info">4、附加签名信息</string>
+    <string name="tip_table_save_info">4、保存上面信息到配置文件</string>
+    <string name="save_profile">保存配置</string>
+    <string name="tip_save_profile">将上面的用户信息、车辆信息、个人信息写到userid目录，形成配置文件:\n{userid}/{licenseno}/car.json\n{userid}/{licenseno}/person.json</string>
+    <string name="tip_table_sign_info">5、附加签名信息</string>
     <string name="choose_zip_file">选择文件</string>
-    <string name="tip_choose_zip_file">请选择签名zip文件，该zip文件根目录为userid命名的目录，具体结构参见 https://github.com/zhaopaniOS/bjjj-php 中关于目录结构的说明</string>
-    <string name="tip_table_car_list_info">5、查询车辆列表信息</string>
+    <string name="tip_choose_zip_file">请选择签名zip文件，该zip文件根目录为userid命名的目录，具体结构参见 https://github.com/zhaopaniOS/bjjj-php 中关于目录结构的说明。如果zip文件存在car.json和person.json文件，则会覆盖步骤4中保存配置所生成的json文件</string>
+    <string name="tip_table_car_list_info">6、查询车辆列表信息</string>
     <string name="enter_car_list">查询</string>
-    <string name="tip_table_submit_paper">6、提交表单申请</string>
+    <string name="tip_enter_car_list">查询结果显示在这里</string>
+    <string name="tip_table_submit_paper">7、提交表单申请</string>
     <string name="submit_paper">提交申请</string>
+    <string name="tip_submit_paper">提交申请结果显示在这里</string>
 </resources>

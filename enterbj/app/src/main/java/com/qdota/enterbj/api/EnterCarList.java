@@ -1,6 +1,7 @@
 package com.qdota.enterbj.api;
 
 import android.content.Context;
+import android.text.TextUtils;
 
 import com.google.gson.JsonObject;
 import com.qdota.enterbj.utility.CallbackInMainThread;
@@ -24,6 +25,9 @@ public class EnterCarList {
      * @param callback 异步回调
      */
     public static boolean request(final Context context, String userId, String platform, final Callback callback) {
+        if (TextUtils.isEmpty(userId) || TextUtils.isEmpty(platform))
+            return false;
+
         OkHttpClient client = new OkHttpClient.Builder()
                 .sslSocketFactory(Config.sSSLSocketFactory, Config.sX509TrustManager)
                 .hostnameVerifier(Config.sHostnameVerifier)

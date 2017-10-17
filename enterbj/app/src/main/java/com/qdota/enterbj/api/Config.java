@@ -1,6 +1,7 @@
 package com.qdota.enterbj.api;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.google.gson.JsonElement;
@@ -10,7 +11,10 @@ import com.google.gson.JsonParser;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
 import java.security.cert.CertificateException;
 import java.security.cert.X509Certificate;
 import java.text.SimpleDateFormat;
@@ -175,5 +179,88 @@ public class Config {
             e.printStackTrace();
         }
         return null;
+    }
+    /*
+     * Json保存
+     */
+    public static void saveJsonTo(String path, String filename, JsonObject jsonObject) throws IOException {
+        final String json = jsonObject.toString();
+
+        File f = new File(path + filename);
+        if (!f.exists()) {
+            File fileParentDir = f.getParentFile();
+            if (!fileParentDir.exists()) {
+                fileParentDir.mkdirs();
+            }
+            f.createNewFile();
+        }
+        OutputStream out = new FileOutputStream(f);
+        out.write(json.getBytes());
+        out.close();
+    }
+    /*
+     * Car.json创建
+     */
+    public static JsonObject createCarJson(String licenseno,
+                                           String engineno,
+                                           String cartypecode,
+                                           String vehicletype,
+                                           String carid,
+                                           String carmodel,
+                                           String carregtime,
+                                           String envGrade) {
+        JsonObject jsonCar = new JsonObject();
+        jsonCar.addProperty("licenseno", licenseno);
+        jsonCar.addProperty("engineno", engineno);
+        jsonCar.addProperty("cartypecode", cartypecode);
+        jsonCar.addProperty("vehicletype", vehicletype);
+
+        jsonCar.addProperty("carid", carid);
+        jsonCar.addProperty("carmodel", carmodel);
+        jsonCar.addProperty("carregtime", carregtime);
+        jsonCar.addProperty("envGrade", envGrade);
+        return jsonCar;
+    }
+    /*
+     * Person.json
+     */
+    public static JsonObject createPersonJson(String drivingphoto,
+                                              String carphoto,
+                                              String drivername,
+                                              String driverlicenseno,
+                                              String driverphoto,
+                                              String personphoto) {
+        JsonObject jsonPerson = new JsonObject();
+        jsonPerson.addProperty("drivingphoto", drivingphoto);
+        jsonPerson.addProperty("carphoto", carphoto);
+
+        jsonPerson.addProperty("drivername", drivername);
+        jsonPerson.addProperty("driverlicenseno", driverlicenseno);
+
+        jsonPerson.addProperty("driverphoto", driverphoto);
+        jsonPerson.addProperty("personphoto", personphoto);
+        return jsonPerson;
+    }
+    /*
+     * 配置保存
+     */
+    private static final String PRE_CONFIG = "config.xml";
+    public static void savePreference(Context context,
+                                      String userid,
+                                      String platform,
+                                      String licenseno) {
+        final SharedPreferences preferences = context.getSharedPreferences(PRE_CONFIG, 0);
+        preferences.edit()
+                .putString("userid", userid)
+                .putString("platform", platform)
+                .putString("licenseno", licenseno)
+                .commit();
+    }
+    /*
+     * 配置读取
+     */
+    public static String readPreference(Context context, String key) {
+        final SharedPreferences preferences = context.getSharedPreferences(PRE_CONFIG, 0);
+        return preferences.getString(key, "");
     }
 }

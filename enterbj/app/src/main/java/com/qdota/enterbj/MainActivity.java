@@ -3,6 +3,7 @@ package com.qdota.enterbj;
 import android.Manifest;
 import android.app.Activity;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
@@ -16,6 +17,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.JsonObject;
+import com.qdota.enterbj.api.Config;
 import com.qdota.enterbj.api.EnterCarList;
 import com.qdota.enterbj.api.SubmitPaper;
 import com.qdota.enterbj.utility.CallbackInMainThread;
@@ -51,6 +54,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText mEdit_envGrade;
     private EditText mEdit_drivername;
     private EditText mEdit_driverlicenseno;
+    private Button mBtnSaveProfile;
     private Button mBtnChooseFile;
     private Button mBtnEnterCarList;
     private Button mBtnSubmitPaper;
@@ -74,6 +78,54 @@ public class MainActivity extends AppCompatActivity {
         mEdit_envGrade = (EditText) findViewById(R.id.envGrade);
         mEdit_drivername = (EditText) findViewById(R.id.drivername);
         mEdit_driverlicenseno = (EditText) findViewById(R.id.driverlicenseno);
+
+        mBtnSaveProfile = (Button) findViewById(R.id.btn_save_profile);
+        mBtnSaveProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String userid = mEdit_userid.getText().toString();
+                String platform = mEdit_platform.getText().toString();
+
+                String licenseno = mEdit_licenseno.getText().toString();
+                String engineno = mEdit_licenseno.getText().toString();
+                String cartypecode = mEdit_cartypecode.getText().toString();
+                String vehicletype = mEdit_vehicletype.getText().toString();
+                String carid = mEdit_carid.getText().toString();
+                String carmodel = mEdit_carmodel.getText().toString();
+                String carregtime = mEdit_carregtime.getText().toString();
+                String envGrade = mEdit_envGrade.getText().toString();
+
+                String drivername = mEdit_drivername.getText().toString();
+                String driverlicenseno = mEdit_driverlicenseno.getText().toString();
+
+                // 写到系统配置里，重启本界面时可以直接加载旧数据
+                Config.savePreference(MainActivity.this, userid, platform, licenseno);
+                // 创建json
+                final String path = Config.formatCarPath(MainActivity.this, userid, licenseno);
+                try {
+                    Config.saveJsonTo(path, "car.json",
+                            Config.createCarJson(
+                                    licenseno,
+                                    engineno,
+                                    cartypecode,
+                                    vehicletype,
+                                    carid,
+                                    carmodel,
+                                    carregtime,
+                                    envGrade));
+                    Config.saveJsonTo(path, "person.json",
+                            Config.createPersonJson(
+                                    "",
+                                    "",
+                                    drivername,
+                                    driverlicenseno,
+                                    "",
+                                    ""));
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
         mBtnChooseFile = (Button) findViewById(R.id.btn_choose_file);
         mBtnChooseFile.setOnClickListener(new View.OnClickListener() {
@@ -174,6 +226,33 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         mTVSubmitResponse = (TextView) findViewById(R.id.tv_submit_response);
+
+        // 加载配置
+        final String userid = Config.readPreference(this, "userid");
+        final String platform = Config.readPreference(this, "platform");
+        final String licenseno = Config.readPreference(this, "licenseno");
+        mEdit_userid.setText(userid);
+        mEdit_platform.setText(platform);
+        mEdit_licenseno.setText(licenseno);
+        // 如果car和person存在，则也读取
+        if (!TextUtils.isEmpty(userid) && !TextUtils.isEmpty(licenseno)) {
+            final String path = Config.formatCarPath(this, userid, licenseno);
+            final JsonObject jsonCar = Config.loadJsonFrom(path, "car.json");
+            if (jsonCar != null) {
+                mEdit_engineno.setText(jsonCar.get("engineno").getAsString());
+                mEdit_cartypecode.setText(jsonCar.get("cartypecode").getAsString());
+                mEdit_vehicletype.setText(jsonCar.get("vehicletype").getAsString());
+                mEdit_carid.setText(jsonCar.get("carid").getAsString());
+                mEdit_carmodel.setText(jsonCar.get("carmodel").getAsString());
+                mEdit_carregtime.setText(jsonCar.get("carregtime").getAsString());
+                mEdit_envGrade.setText(jsonCar.get("envGrade").getAsString());
+            }
+            final JsonObject jsonPerson = Config.loadJsonFrom(path, "person.json");
+            if (jsonPerson != null) {
+                mEdit_drivername.setText(jsonCar.get("drivername").getAsString());
+                mEdit_driverlicenseno.setText(jsonCar.get("driverlicenseno").getAsString());
+            }
+        }
     }
 
     @Override
